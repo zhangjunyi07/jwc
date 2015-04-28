@@ -8,14 +8,16 @@
     <script src="/1/Public/js/jquery.nivo.slider.pack.js"></script>
     <script src="/1/Public/js/getaddclose.js"></script>
 </head>
-<body>
-
+<body onload="time()">
+<div id="time"></div>
 <a href="#"><div id="GetOpen">开课一览</div></a>
 <a href="#"><div id="GetCheckOpen">代审课程</div></a>
 <a href="#"><div id="GetStudent">学生一览</div></a>
 <a href="#"><div id="GetFaculty">院系一览</div></a>
 <a href="#"><div id="GetCourse">课程一览</div></a>
 <a href='#'><div id="AddFaculty">新增学院</div></a>
+<a href="#"><div id="GetTerm">选课时间一览</div></a>
+
 <div class="row" id="add" style="display:none;">
     <h3>新增<span style="font-size:20px"><a href="javascript:" id="closeadd">[关闭]</a></span></h3>
     <div id="addcontent">
@@ -34,6 +36,13 @@
 </div>
 </body>
 <script type="text/javascript">
+    function time(){
+        var now= new Date();
+        console.log(now);
+        var year=now.getFullYear();
+        var month=now.getMonth();
+        var date=now.getDate();
+        document.getElementById("time").innerHTML="今天是："+year+"年"+(month+1)+"月"+date+"日";};
     function FacultyInputCheck(AAddFaculty) {
 //        console.log("lalala");
         if (fucChecknum(AAddFaculty.faculty_id.value, 4) == 0) {
@@ -106,7 +115,28 @@
         }
     };
     $(document).ready(function() {
+        $("GetTerm").click(function(){
+            $.getJSON("{:U('Get/GetTerm')}", {}, function (data) {
 
+            });
+        });
+//        $("#SetElectiveTime").click(function(){
+//            console.log("settime");
+//            var nnn = new Date();
+//            var set="<form><table><tr><th>请选择学期<select id=\"term\" name=\"term\">" ;
+//            for(var i=2012;i<nnn.getFullYear()+1;i++)
+//            {
+//                set+="<option value="+i+"秋季学期"+">"+i+"秋季学期"+"</option>" +
+//                "<option value="+i+"冬季学期"+">"+i+"冬季学期"+"</option>" +
+//                "<option value="+i+"春季学期"+">"+i+"春季学期"+"</option>" +
+//                "<option value="+i+"夏季学期"+">"+i+"夏季学期"+"</option>";
+//            }
+//           set+= "</select></th></tr>" +
+//                 "<tr><th>第<select id=\"turns\" name=\"turns\"><option value=\"1\">1</option><option value=\"2\">2</option></select>轮选课</th></tr>" +
+//           "<tr><th></table></form>"
+//            $("#addcontent").html(set);
+//            $("#add").show(1000);
+//        });
         $("#GetCheckOpen").click(function () {
             console.log("CheckOpen");
             $.getJSON("{:U('Get/GetCheckOpen')}", {}, function (data) {

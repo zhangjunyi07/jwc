@@ -40,5 +40,11 @@ class GetController extends Controller
         $searchResult = $CourseModel->where()->select();
         echo json_encode($searchResult);
     }
+    public function GetTerm()
+    {
+        $Model = M('term');
+        $Result = $Model->where()->select();
+        echo json_encode($Result);
+    }
 
 }
