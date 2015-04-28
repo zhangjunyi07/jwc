@@ -25,5 +25,13 @@ class SearchController extends Controller
         $result = $Model->where($data)->select();
         echo json_encode($result);
     }
+    public function TermSearch($term_name,$turns)
+    {
+        $Model = M('term');
+        $data['term_name'] = $term_name;
+        $data['turns'] = $turns;
+        $result = $Model->where($data)->select();
+        echo json_encode($result);
+    }
 
 }
