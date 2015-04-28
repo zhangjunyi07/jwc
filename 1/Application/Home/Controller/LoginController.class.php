@@ -16,7 +16,7 @@ class LoginController extends Controller {
             $StudentModel = M('student');
             if($StudentModel->where($data)->find()){
                 session('id',$id);
-                $this->success("Welcome!",U('Student/Student'),2);
+                    $this->success("Welcome!$id",U('Student/Student'),2);
             }
             else{
                 $TeacherModel = M('teacher');

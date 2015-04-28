@@ -18,10 +18,10 @@ class AddController extends Controller
         $data['address']=$address;
         $data['phone']=$phone;
         if($facultyModel->add($data)){
-            $this->success("Add Success!",U('Root/Root'),2);
+            echo '<script>alert("Add Success!");history.go(-2);</script>';
         }
         else{
-            $this->error("Add error!",U('Root/Root'),2);
+            echo '<script>alert("Add Success!");history.go(-1);</script>';
         }
     }
 }

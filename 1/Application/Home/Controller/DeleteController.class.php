@@ -14,10 +14,10 @@ class DeleteController extends Controller{
         $OpenModel = M('open');
         $data['no']=$no;
         if($OpenModel->where($data)->delete()){
-            $this->success("Delete Success!",U('Root/Root'),2);
+            echo '<script>alert("Delete success!");history.go(-1);</script>';
         }
         else{
-            $this->error("Delete Error!",U('Root/Root'),2);
+            echo '<script>alert("Delete Error!");history.go(-1);</script>';
         }
     }
 
@@ -25,10 +25,10 @@ class DeleteController extends Controller{
         $StudentModel = M('Student');
         $data['id']=$id;
         if( $StudentModel->where($data)->delete()){
-            $this->success("Delete Success!",U('Root/root'),2);
+            echo '<script>alert("Delete success!");history.go(-1);</script>';
         }
         else{
-            $this->error("Delete Error!",U('Root/root'),2);
+            echo '<script>alert("Delete Error!");history.go(-1);</script>';
         }
 
     }
@@ -40,14 +40,14 @@ class DeleteController extends Controller{
         $TModel = M('teacher');
 
         if($SModel->where($data)->find())
-            echo '<script>alert("Delete Error!啦啦")</script>';
+            echo '<script>alert("Delete Error!student belongs to it");history.go(-1);</script>';
         else
             if($TModel->where($data)->find())
-                $this->error("Delete Error!有教师存在于该学院",U('Root/Root'),2);
+                echo '<script>alert("Delete Error!teacher belongs to it");history.go(-1);</script>';
             else
             {
                 $FacultyModel->where($data)->delete();
-                $this->success("Delete Success!",U('Root/Root'),2);
+                echo '<script>alert("Delete success!");history.go(-1);</script>';
             }
     }
     public function CourseDelete($course_id){
@@ -55,11 +55,11 @@ class DeleteController extends Controller{
         $data['course_id']=$course_id;
         $OModel = M('open');
         if($OModel->where($data)->find())
-            $this->error("Delete Error!该课程已开课",U('Root/Root'),2);
+            echo '<script>alert("Delete Error!it found");history.go(-1);</script>';
         else
             {
                 $CourseModel->where($data)->delete();
-                $this->success("Delete Success!",U('Root/Root'),2);
+                echo '<script>alert("Delete success!");history.go(-1);</script>';
             }
     }
 }

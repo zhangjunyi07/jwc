@@ -3,9 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <script src="/jwc/Public/js/jquery.min.js"></script>
-    <script src="/jwc/Public/js/bootstrap.min.js"></script>
-    <script src="/jwc/Public/js/jquery.nivo.slider.pack.js"></script>
+    <script src="/1/Public/js/jquery.min.js"></script>
+    <script src="/1/Public/js/bootstrap.min.js"></script>
+    <script src="/1/Public/js/jquery.nivo.slider.pack.js"></script>
 </head>
 <body>
 <a href="#"><div id="GetOpen">开课一览</div></a>
@@ -98,7 +98,7 @@
                           add+="<option value="+data[i].course_id+">"+data[i].name+"</option>";
                      }
                     add+="</select><br><br>学期<select id=\"term\" name=\"term\">" ;
-                for(var i=2012;i<year.getFullYear();i++)
+                for(var i=2012;i<year.getFullYear()+1;i++)
                 {
                     add+="<option value="+i+"秋季学期"+">"+i+"秋季学期"+"</option>" +
                     "<option value="+i+"冬季学期"+">"+i+"冬季学期"+"</option>" +

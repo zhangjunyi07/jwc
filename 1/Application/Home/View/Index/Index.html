@@ -3,10 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>教务管理系统</title>
-    <link href="/jwc/Public/css/login.css" rel="stylesheet" type="text/css" />
-    <script src="/jwc/Public/js/jquery.min.js"></script>
-    <script src="/jwc/Public/js/bootstrap.min.js"></script>
-    <script src="/jwc/Public/js/jquery.nivo.slider.pack.js"></script>
+    <link href="/1/Public/css/login.css" rel="stylesheet" type="text/css" />
+    <script src="/1/Public/js/jquery.min.js"></script>
+    <script src="/1/Public/js/bootstrap.min.js"></script>
+    <script src="/1/Public/js/jquery.nivo.slider.pack.js"></script>
 
 </head>
 

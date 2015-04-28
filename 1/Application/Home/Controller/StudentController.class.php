@@ -18,19 +18,33 @@ class StudentController extends Controller
     public function MyInfo()
     {
         $StudentModel = M('student');
-        $data['id'] = session('id');
+        $a = session('id');
+        $data['id'] = $a;
         $Result = $StudentModel->where($data)->select();
-        $this->assign('Result',$Result);
-        $this->display();
+        echo json_encode($Result);
     }
+
     public function ChangePwd($old,$new1,$new2)
     {
 
     }
 
     public function ElectiveCourse($course_id,$teacher_id){
-        $ElectiveModel = M('elective');
-        $data['id'] = session('id');
-        $data['course_id'] = $course_id;
+        $EModel = M('elective');
+        $SModel = M('student');
+        $CModel = M('course');
+        $date['course_id'] = $course_id;
+        $date['teacher_id'] = $teacher_id;
+        $a = session('id');
+        //Ñ¡¿ÎÊ±¼ä³åÍ»
+
+
+        $S = $SModel->where('id=$a')->select();
+        $C = $CModel->where('course_id=$course_id')->select();
+        if($S['C_Point']+$C['point']>35)
+        {
+            echo '<script>alert("More than you can elective!");history.go(-1);</script>';
+        }
+
     }
 }
