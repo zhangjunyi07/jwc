@@ -3,10 +3,10 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <script src="/jwc/Public/js/jquery.min.js"></script>
-    <script src="/jwc/Public/js/bootstrap.min.js"></script>
-    <script src="/jwc/Public/js/jquery.nivo.slider.pack.js"></script>
-    <script src="/jwc/Public/js/getaddclose.js"></script>
+    <script src="/1/Public/js/jquery.min.js"></script>
+    <script src="/1/Public/js/bootstrap.min.js"></script>
+    <script src="/1/Public/js/jquery.nivo.slider.pack.js"></script>
+    <script src="/1/Public/js/getaddclose.js"></script>
 </head>
 <body>
 
@@ -77,7 +77,7 @@
     }
     function OpenCheck21(no) {
     console.log(no);
-        $.getJSON("<?php echo U('Search/SearchOpen');?>", {'no':no} , function (date) {
+        $.getJSON("<?php echo U('Search/OpenSearch');?>", {'no':no} , function (date) {
             console.log("12111sdfasfd");
             var result = "<form name='CheckOpen' action=\"<?php echo U('Change/OpenChange');?>\">" +
                     "<td><input type=\"text\" onfocus=\"this.blur()\" name=\"no\" value=" + date[0].no + "></td>" +
@@ -104,7 +104,7 @@
         {
             return false;
         }
-    }
+    };
     $(document).ready(function() {
 
         $("#GetCheckOpen").click(function () {
@@ -122,8 +122,8 @@
                     "</td><td>" + data[i].address +
                     "</td><td>" + data[i].actual_num +
                     "</td><td>" + data[i].volume +
-                    "</td><td><form name=\"OpenCheck\">" +
-                    "<button onclick=OpenCheck21("+data[i].no+")>审核</button></form></td>" +
+                    "</td><td>" +
+                    "<button onclick=OpenCheck21("+data[i].no+")>审核</button></td>" +
                     "<td><form action=\"<?php echo U('Change/OpenCheckFail');?>\"><input type=\"text\" style=\"display: none\"  name=\"no\" value="+data[i].no+"><button>否决</button></form></td></tr>";
                 }
                 $("#searchcontent").html(openresult);

@@ -98,7 +98,7 @@
                           add+="<option value="+data[i].course_id+">"+data[i].name+"</option>";
                      }
                     add+="</select><br><br>学期<select id=\"term\" name=\"term\">" ;
-                for(var i=2012;i<year.getFullYear();i++)
+                for(var i=2012;i<year.getFullYear()+1;i++)
                 {
                     add+="<option value="+i+"秋季学期"+">"+i+"秋季学期"+"</option>" +
                     "<option value="+i+"冬季学期"+">"+i+"冬季学期"+"</option>" +
