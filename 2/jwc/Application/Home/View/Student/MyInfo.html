@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<table class="MyInfosearch">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Sex</th>
+        <th>Birthday</th>
+        <th>Native_Place</th>
+        <th>Admission</th>
+        <th>Phone</th>
+        <th>Faculty_id</th>
+    </tr>
+
+    <volist name="Result" id="data">
+        <tr>
+        <td>{$data.id}</td>
+        <td>{$data.name}</td>
+        <td>{$data.sex}</td>
+        <td>{$data.birthday}</td>
+        <td>{$data.native_place}</td>
+        <td>{$data.admission}</td>
+        <td>{$data.phone}</td>
+        <td>{$data.faculty_id}</td>
+         </tr>
+    </volist>
+    </table>
+<div id="ChangePwdd"><a href="#">修改密码</a>
+<!--<div id="ChangePwd" style="visibility: hidden">-->
+    <!--<form action="{:U('Sutdent/ChangePwd')}">-->
+        <!--<table>-->
+            <!--<tr>-->
+                <!--原密码<input type="password" name="old" >-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--新密码<input type="password" name="new1" >-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--再输一次<input type="password" name="new2" >-->
+            <!--</tr>-->
+            <!--<button type="submit">提交</button>-->
+        <!--</table>-->
+    <!--</form>-->
+<!--</div>-->
+</div>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

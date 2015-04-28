@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form  action="{:U('Root/FacultyChange')}">
+<volist name="searchResult" id="data">
+    <tr>
+        <td><input type="text" name="faculty_id" value="{$data.faculty_id}"></td>
+        <td><input type="text" name="faculty_name" value="{$data.faculty_name}"></td>
+        <td><input type="text" name="department_name" value="{$data.department_name}"></td>
+        <td><input type="text" name="phone" value="{$data.phone}"></td>
+        <td><input type="text" name="address" value="{$data.address}"></td>
+            <button type="submit">修改</button></td>
+    </tr>
+</volist>
+</form>
+</body>
+</html>
