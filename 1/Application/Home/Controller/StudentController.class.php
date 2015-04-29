@@ -29,7 +29,7 @@ class StudentController extends Controller
 
     }
 
-    public function ElectiveCourse($course_id,$teacher_id){
+    public function ElectiveCourseTurns1($course_id,$teacher_id){
         $EModel = M('elective');
         $SModel = M('student');
         $CModel = M('course');

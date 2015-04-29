@@ -11,7 +11,10 @@
 <body>
 <a href="#"><div id="MyInfo">查询个人信息</div></a>
 <a href="#"><div id="Select">选课</div></a>
-<div id="time"></div>
+<div id="selectcourse">
+    <div id="selecttimes"></div>
+    <div id="selectsearch"></div>
+</div>
 <div class="row" id="me" style="display:none;">
     <h3>个人信息<span style="font-size:20px"><a href="javascript:" id="closeme">[关闭]</a></span></h3>
     <div>
@@ -24,6 +27,12 @@
         <div id="changecontent"></div>
     </div>
 </div>
+<div class="row" id="search" style="display:none;">
+    <h3>搜索结果<span style="font-size:20px"><a href="javascript:" id="closesearch">[关闭]</a></span></h3>
+    <div>
+        <table class="search" id="searchcontent"></table>
+    </div>
+    </div>
 </body>
 <script type="text/javascript">
     function changemeinfoinputcheck(changemeinfo) {
@@ -90,35 +99,54 @@
             $("#change").show(1000);
         });
     }
+    function Select1(){
+//        console.log("lalala");
+//        $.getJSON("{:U('Get/GetOpen')}", {}, function (data) {
+//                console.log("lalala");
+//            var openresult = "<tr><th>No</th><th>Term</th><th>Course_id</th><th>Teacher_id</th><th>Time</th><th>Address</th><th>Actual_Num</th><th>Volume</th></tr>";
+//
+//            for (var i = 0; i < data.length; i++) {
+//                openresult += "<tr><td>" + data[i].no + "</td><td>" + data[i].term + "</td><td>" + data[i].course_id + "</td><td>" + data[i].teacher_id + "</td><td>" + data[i].time + "</td><td>" + data[i].address + "</td><td>" + data[i].actual_num + "</td><td>" + data[i].volume + "</td>" ;
+//            }
+//            $("#searchcontent").html(openresult);
+//            $("#search").show(1000);
+//        });
+    };
 $(document).ready(function() {
 
     console.log("ready");
     $("#Select").click(function(){
-        var now  = new Date();
-        var year = now.getFullYear();
-        var month = now.getMonth()+1;
-        var day = now.getDate();
-        var nnow =year*10000+month*100+day;
-        var flag = 0;
+        var now  = new Date();var year = now.getFullYear();var month = now.getMonth()+1;var day = now.getDate();var nnow =year*10000+month*100+day;var flag = 0;
         $.getJSON("{:U('Get/GetTerm')}",{},function(data){
             for(var i=0;i<data.length;i++)
             {
                 if(data[i].start<=nnow&&data[i].end>=nnow)
                 {
-                    flag = i+1;
+                    flag = i;
                 }
             }
-            if(flag)
+            if(flag+1)
             {
                 var time="欢迎选课，现在是"+data[flag].term_name+"第"+data[flag].turns+"轮选课时间！";
-                $("#time").html(time);
-                $("#time").show(100);
+                var search="<form action=\"{:U('Search/SelectSearch')}\"><table><tr><td>课程号<input type=\"text\" name=\"course_id\" placeholder='08300001'></td>" +
+                        "<td>课程名<input type=\"text\" name=\"course_name\" placeholder='数据结构'></td>" +
+                        "<td>教师号<input type=\"text\" name=\"teacher_id\" placeholder='0001'></td>" +
+                        "<td>教师名<input type=\"text\" name=\"name\" placeholder='赵正德'></td></tr>" +
+                        "<tr><td>上课时间<input type=\"text\" name=\"time\" placeholder='三9'></td>" +
+                        "<td>上课地点<input type=\"text\" name=\"address\" placeholder='A101'></td>" +
+                        "<td>学分<input type=\"text\" name=\"point\" placeholder='4'></td></tr>" +
+                        "<tr><td><input type=\"submit\" id=\"submit\" name=\"submit\" value=\"搜索\"></td></tr> " +
+                        "</table></form>"
+                $("#selecttimes").html(time);
+                $("#selectsearch").html(search);
+                $("#selectcourse").show(100);
+
             }
             else
             {
                  time="抱歉，还不能选课！";
-                $("#time").html(time);
-                $("#time").show(100);
+                $("#selecttimes").html(time);
+                $("#selectcourse").show(100);
             }
         });
     });
@@ -134,7 +162,10 @@ $(document).ready(function() {
     });
     $("#closeme").click(function (){
         $("#me").hide(1000);
-    })
+    });
+    $("#closesearch").click(function () {
+        $("#search").hide(1000);
+    });
 });
 </script>
 </html>

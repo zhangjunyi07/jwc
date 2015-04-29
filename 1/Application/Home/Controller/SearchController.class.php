@@ -33,5 +33,9 @@ class SearchController extends Controller
         $result = $Model->where($data)->select();
         echo json_encode($result);
     }
+    public function SelectSearch($course_id,$course_name,$teacher_id,$name,$time,$address,$point)
+    {
+        echo $course_id,$course_name,$teacher_id,$name,$time,$address,$point;
+    }
 
 }
