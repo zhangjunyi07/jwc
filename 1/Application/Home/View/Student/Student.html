@@ -99,6 +99,37 @@
             $("#change").show(1000);
         });
     }
+    function SearchCourse12(){
+        console.log("a");
+        var a = document.getElementById('course_id').value;
+        var b = document.getElementById('course_name').value;
+        var c = document.getElementById('teacher_id').value;
+        var d = document.getElementById('name').value;
+        var e = document.getElementById('time').value;
+        var f = document.getElementById('address').value;
+        var g = document.getElementById('point').value;
+        $.getJSON("{:U('Search/SelectSearch')}",{'course_id':a,'course_name':b,'teacher_id':c,'name':d,'time':e,'address':f,'point':g},function(data){
+            console.log("ab");
+            var result ="daye";
+            for(var i=0;i<data.length;i++)
+            {
+
+                 result += "<tr><td>" + data[i].no +
+                "</td><td>" + data[i].term +
+                "</td><td>" + data[i].course_id +
+                "</td><td>" + data[i].teacher_id +
+                "</td><td>" + data[i].time +
+                "</td><td>" + data[i].address +
+                "</td><td>" + data[i].actual_num +
+                "</td><td>" + data[i].volume +
+                "</td></tr>";
+            }
+            $("#searchcontent").html(result);
+            $("#search").show(1000);
+        })
+
+    };
+
     function Select1(){
 //        console.log("lalala");
 //        $.getJSON("{:U('Get/GetOpen')}", {}, function (data) {
@@ -128,15 +159,15 @@ $(document).ready(function() {
             if(flag+1)
             {
                 var time="欢迎选课，现在是"+data[flag].term_name+"第"+data[flag].turns+"轮选课时间！";
-                var search="<form action=\"{:U('Search/SelectSearch')}\"><table><tr><td>课程号<input type=\"text\" name=\"course_id\" placeholder='08300001'></td>" +
-                        "<td>课程名<input type=\"text\" name=\"course_name\" placeholder='数据结构'></td>" +
-                        "<td>教师号<input type=\"text\" name=\"teacher_id\" placeholder='0001'></td>" +
-                        "<td>教师名<input type=\"text\" name=\"name\" placeholder='赵正德'></td></tr>" +
-                        "<tr><td>上课时间<input type=\"text\" name=\"time\" placeholder='三9'></td>" +
-                        "<td>上课地点<input type=\"text\" name=\"address\" placeholder='A101'></td>" +
-                        "<td>学分<input type=\"text\" name=\"point\" placeholder='4'></td></tr>" +
-                        "<tr><td><input type=\"submit\" id=\"submit\" name=\"submit\" value=\"搜索\"></td></tr> " +
-                        "</table></form>"
+                var search="<table><tr><td>课程号<input type=\"text\" id=\"course_id\" name=\"course_id\" placeholder='08300001'></td>" +
+                        "<td>课程名<input type=\"text\" id=\"course_name\" name=\"course_name\" placeholder='数据结构'></td>" +
+                        "<td>教师号<input type=\"text\" id=\"teacher_id\" name=\"teacher_id\" placeholder='0001'></td>" +
+                        "<td>教师名<input type=\"text\" id=\"name\" name=\"name\" placeholder='赵正德'></td></tr>" +
+                        "<tr><td>上课时间<input type=\"text\" id=\"time\" name=\"time\" placeholder='三9'></td>" +
+                        "<td>上课地点<input type=\"text\" id=\"address\" name=\"address\" placeholder='A101'></td>" +
+                        "<td>学分<input type=\"text\" id=\"point\" name=\"point\" placeholder='4'></td></tr>" +
+                        "<tr><td><button onclick=SearchCourse12()>搜索</button></td></tr> " +
+                        "</table>"
                 $("#selecttimes").html(time);
                 $("#selectsearch").html(search);
                 $("#selectcourse").show(100);
