@@ -17,7 +17,7 @@
 <a href="#"><div id="GetCourse">课程一览</div></a>
 <a href='#'><div id="AddFaculty">新增学院</div></a>
 <a href="#"><div id="GetTerm">选课时间一览</div></a>
-<a href="#"><div id="SetElectiveTime">设置选课时间</div></a>
+<!--<a href="#"><div id="SetElectiveTime">设置选课时间</div></a>-->
 <div class="row" id="add" style="display:none;">
     <h3>新增<span style="font-size:20px"><a href="javascript:" id="closeadd">[关闭]</a></span></h3>
     <div id="addcontent">
@@ -26,6 +26,12 @@
 <div class="row" id="change" style="display:none;">
     <h3>修改<span style="font-size:20px"><a href="javascript:" id="closechange">[关闭]</a></span></h3>
     <div id="changecontent">
+    </div>
+</div>
+<div class="row" id="ssearch" style="display:none;">
+    <h3>查询<span style="font-size:20px"><a href="javascript:" id="closessearch">[关闭]</a></span></h3>
+    <div>
+        <table class="ssearch" id="ssearchcontent"></table>
     </div>
 </div>
 <div class="row" id="search" style="display:none;">
@@ -45,7 +51,7 @@
         document.getElementById("time").innerHTML="今天是："+year+"年"+(month+1)+"月"+date+"日";};
     function FacultyInputCheck(AAddFaculty) {
 //        console.log("lalala");
-        if (fucChecknum(AAddFaculty.faculty_id.value, 4) == 0) {
+        if (fucchecknum(AAddFaculty.faculty_id.value, 4) == 0) {
             alert("院系号必须为4位数字！");
             AAddFaculty.faculty_id.focus();
             return (false);
@@ -65,13 +71,13 @@
             AAddFaculty.address.focus();
             return (false);
         }
-        if (fucChecknum(AAddFaculty.phone.value, 11) == 0) {
+        if (fucchecknum(AAddFaculty.phone.value, 11) == 0) {
             alert("dianhua必须为11位数字！");
             AAddFaculty.phone.focus();
             return (false);
         }
     }
-    function fucChecknum(num, len) {
+    function fucchecknum(num, len) {
         var i, j, strTemp;
         strTemp = "0123456789";
         if (num.length != len)
@@ -104,15 +110,30 @@
         }, 'html');
 
     }
+//    function searchterm(term){
+//        var tt = term.term_name.value;
+//        var ss = term.turns.value;
+//        $.getJSON("<?php echo U('Search/TermSearch');?>",{'tt':term_name,'ss':turns},function(){
+//            var result = "<table><form name='changeterm' action=\"<?php echo U('Change/TermChange');?>\">" +
+//                    "<tr><td><input type=\"text\" onfocus=\"this.blur()\" name=\"term_name\" value=" + data[0].term_name + "></td>" +
+//                    "<td><input type=\"text\" onfocus=\"this.blur()\" name=\"turns\" value=" + data[0].turns + "></td>" +
+//                    "<td><input type=\"text\"  name=\"start\" value=" + data[0].start + "></td>" +
+//                    "<td><input type=\"text\"  name=\"end\" value=" + data[0].end + "></td></tr>" +
+//                    "<tr><td><button >保存</button></td></tr></form></table>";
+//            $("#changecontent").html(result);
+//            $("#change").show(1000);
+//        });
+//    };
     function TermChange1(term_name,turns){
-        console.log("termchange");
+        console.log(term_name);
+        console.log(turns);
         $.getJSON("<?php echo U('Search/TermSearch');?>",{'term_name':term_name,'turns':turns},function(data){
-            var result = "<table><form name='changeterm' action=\"<?php echo U('Change/TermChange');?>\">" +
-                    "<tr><td><input type=\"text\" onfocus=\"this.blur()\" name=\"term_name\" value=" + data[0].term_name + "></td>" +
+            var result = "<form name='changeterm' action=\"<?php echo U('Change/TermChange');?>\">" +
+                    "<table><tr><td><input type=\"text\" onfocus=\"this.blur()\" name=\"term_name\" value=" + data[0].term_name + "></td>" +
                     "<td><input type=\"text\" onfocus=\"this.blur()\" name=\"turns\" value=" + data[0].turns + "></td>" +
                     "<td><input type=\"text\"  name=\"start\" value=" + data[0].start + "></td>" +
                     "<td><input type=\"text\"  name=\"end\" value=" + data[0].end + "></td></tr>" +
-                            "<tr><td><button >保存</button></td></tr></form></table>";
+                    "<tr><td><button >保存</button></td></tr></table></form>";
             $("#changecontent").html(result);
             $("#change").show(1000);
         });
@@ -144,22 +165,23 @@
                 $("#search").show(1000);
             });
         });
-        $("#SetElectiveTime").click(function(){
-            console.log("settime");
-            var nnn = new Date();
-            var set="<form><table><tr><td>第<select id=\"term\" name=\"term\">" ;
-            for(var i=2012;i<nnn.getFullYear()+1;i++)
-            {
-                set+="<option value="+i+"秋季学期"+">"+i+"秋季学期"+"</option>" +
-                "<option value="+i+"冬季学期"+">"+i+"冬季学期"+"</option>" +
-                "<option value="+i+"春季学期"+">"+i+"春季学期"+"</option>" +
-                "<option value="+i+"夏季学期"+">"+i+"夏季学期"+"</option>";
-            }
-           set+= "</select>学期</td><td>第<select id=\"turns\" name=\"turns\"><option value=\"1\">1</option><option value=\"2\">2</option></select>轮选课</td><td><button>查询</button></td></tr>" +
-           "</table></form>"
-            $("#addcontent").html(set);
-            $("#add").show(1000);
-        });
+//        $("#SetElectiveTime").click(function(){
+//            console.log("settime");
+//            var nnn = new Date();
+//            var set="<form name=\"term\" onsubmit=\"return searchterm(this)\"><table><tr><td>第<select id=\"term_name\" name=\"term_name\">" ;
+//            for(var i=2012;i<nnn.getFullYear()+1;i++)
+//            {
+//                set+="<option value="+i+"秋季学期"+">"+i+"秋季学期"+"</option>" +
+//                "<option value="+i+"冬季学期"+">"+i+"冬季学期"+"</option>" +
+//                "<option value="+i+"春季学期"+">"+i+"春季学期"+"</option>" +
+//                "<option value="+i+"夏季学期"+">"+i+"夏季学期"+"</option>";
+//            }
+//            set+= "</select>学期</td><td>第<select id=\"turns\" name=\"turns\"><option value=\"1\">1</option><option value=\"2\">2</option></select>轮选课</td>" ;
+//            set+= "<td><button>查询</button></td></tr>" +
+//            "</table></form>";
+//            $("#ssearchcontent").html(set);
+//            $("#ssearch").show(1000);
+//        });
         $("#GetCheckOpen").click(function () {
             console.log("CheckOpen");
             $.getJSON("<?php echo U('Get/GetCheckOpen');?>", {}, function (data) {
@@ -250,6 +272,9 @@
         })
         $("#closesearch").click(function () {
             $("#search").hide(1000);
+        });
+        $("#closessearch").click(function () {
+            $("#ssearch").hide(1000);
         });
         $("#closeadd").click(function () {
             $("#add").hide(1000);

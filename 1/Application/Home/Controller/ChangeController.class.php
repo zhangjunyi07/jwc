@@ -78,4 +78,23 @@ class ChangeController extends Controller
             echo '<script>alert("Change Error!");history.go(-1);</script>';
         }
     }
+    public function TermChange($term_name,$turns,$start,$end){
+        $Model = M('term');
+        $data['term_name']=$term_name;
+        $data['turns']=$turns;
+        $data['start']=$start;
+        $data['end']=$end;
+        if($Model->where($data)->find())
+        {
+            echo '<script>alert("No Term changed!");history.go(-1);</script>';
+        }
+        if($Model->save($data))
+        {
+            echo '<script>alert("Change Successs!");history.go(-2);</script>';
+        }
+        else
+        {
+            echo '<script>alert("Change Error!");history.go(-1);</script>';
+        }
+    }
 }

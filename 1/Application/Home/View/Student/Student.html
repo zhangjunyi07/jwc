@@ -10,6 +10,8 @@
 </head>
 <body>
 <a href="#"><div id="MyInfo">查询个人信息</div></a>
+<a href="#"><div id="Select">选课</div></a>
+<div id="time"></div>
 <div class="row" id="me" style="display:none;">
     <h3>个人信息<span style="font-size:20px"><a href="javascript:" id="closeme">[关闭]</a></span></h3>
     <div>
@@ -89,7 +91,37 @@
         });
     }
 $(document).ready(function() {
+
     console.log("ready");
+    $("#Select").click(function(){
+        var now  = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth()+1;
+        var day = now.getDate();
+        var nnow =year*10000+month*100+day;
+        var flag = 0;
+        $.getJSON("{:U('Get/GetTerm')}",{},function(data){
+            for(var i=0;i<data.length;i++)
+            {
+                if(data[i].start<=nnow&&data[i].end>=nnow)
+                {
+                    flag = i+1;
+                }
+            }
+            if(flag)
+            {
+                var time="欢迎选课，现在是"+data[flag].term_name+"第"+data[flag].turns+"轮选课时间！";
+                $("#time").html(time);
+                $("#time").show(100);
+            }
+            else
+            {
+                 time="抱歉，还不能选课！";
+                $("#time").html(time);
+                $("#time").show(100);
+            }
+        });
+    });
     $("#MyInfo").click(function () {
         console.log("myinfo");
          $.getJSON("{:U('Student/MyInfo')}",{},function(data){
@@ -100,8 +132,7 @@ $(document).ready(function() {
              $("#me").show(1000);
          });
     });
-    $("#closeme").click(function ()
-    {
+    $("#closeme").click(function (){
         $("#me").hide(1000);
     })
 });
