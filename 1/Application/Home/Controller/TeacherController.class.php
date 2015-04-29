@@ -33,4 +33,22 @@ class TeacherController extends Controller
         $name = $CModel->where()->select();
         echo json_encode($name);
     }
+
+    public function ChangePwd()
+    {
+        $TModel = M('teacher');
+        $T_id = session('id');
+        $data['teacher_id'] = $T_id;
+        $pwd = $TModel->where($data)->field('password')->select();
+        echo json_encode($pwd);
+    }
+
+    public function MyApplication()
+    {
+        $Model=M('open');
+        $t_id=session('id');
+        $data['teacher_id']=$t_id;
+        $result=$Model->where($data)->where('state=1')->select();
+        echo json_encode($result);
+    }
 }

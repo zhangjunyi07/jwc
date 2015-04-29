@@ -12,6 +12,8 @@
 <a href="#"><div id="MyCourse">我的课程</div></a>
 <a href="#"><div id="StudentList">学生名单</div></a>
 <a href="#"><div id="OpenCourse">申请开课</div></a>
+<a href="#"><div id="ChangePwd">修改密码</div></a>
+<a href="#"><div id="MyApplication">我的申请</div></a>
 <div>
     <table class="search" id="resulttable"></table>
 </div>
@@ -22,6 +24,33 @@
 </div>
 </body>
 <script type="text/javascript">
+    function InputCheck(ChangePwd)
+    {
+        if(ChangePwd.old_pwd.value==""||ChangePwd.new_pwd.value==""||ChangePwd.re_pwd.value=="")
+        {
+            alert("输入不能为空");
+            return (false);
+        }
+        if(ChangePwd.old_pwd.value != ChangePwd.oold_pwd.value)
+        {
+            alert("旧密码输入错误！");
+            ChangePwd.old_pwd.focus();
+            return (false);
+        }
+        if(ChangePwd.new_pwd.value != ChangePwd.re_pwd.value)
+        {
+            alert("新密码输入不一致！");
+            ChangePwd.re_pwd.focus();
+            return (false);
+        }
+
+        if(ChangePwd.old_pwd.value==ChangePwd.new_pwd.value)
+        {
+            alert("新旧密码一致，没有修改！");
+            return (false);
+
+        }
+    }
 
     $(document).ready(function(){
         $("#GetOpen").click(function() {
@@ -86,18 +115,19 @@
 
                 })
 
-        $("#OpenCourse").click(function(){
+        $("#OpenCourse").click(function()
+        {
             console.log("123");
             $.getJSON("{:U('Teacher/OpenCourse')}", {}, function (data) {
                 console.log("123");
                 var year = new Date();
-                var add = "<form name='OOpenCourse' action=\"{:U('Add/AddOpen')}\" onsubmit=\"return CourseInputCheck(this)\">" +
-                     "课程名<select id=\"name\" name=\"course_id\">";
-                    for(var i=0;i<data.length;i++)
-                    {
-                          add+="<option value="+data[i].course_id+">"+data[i].name+"</option>";
-                     }
-                    add+="</select><br><br>学期<select id=\"term\" name=\"term\">" ;
+                var add = "<form name='OOpenCourse' action=\"{:U('Add/AddOpen')}\" onsubmit=\"return InputCheck(this)\">" +
+                        "课程名<select id=\"name\" name=\"course_id\">";
+                for(var i=0;i<data.length;i++)
+                {
+                    add+="<option value="+data[i].course_id+">"+data[i].name+"</option>";
+                }
+                add+="</select><br><br>学期<select id=\"term\" name=\"term\">" ;
                 for(var i=2012;i<year.getFullYear()+1;i++)
                 {
                     add+="<option value="+i+"秋季学期"+">"+i+"秋季学期"+"</option>" +
@@ -105,12 +135,56 @@
                     "<option value="+i+"春季学期"+">"+i+"春季学期"+"</option>" +
                     "<option value="+i+"夏季学期"+">"+i+"夏季学期"+"</option>";
                 }
-                   add+= "</select>"+
-                     "</form>";
+                add+="</select><br><br>开课时间<input type=\"text\" id=\"time\" name=\"time\">例：一1-2 三1-2" ;
+                add+="<br><br>容量<input type=\"text\" id=\"volume\" name=\"volume\" >";
+                add+= "<br><br><input type=\"submit\" name=\"submit\" id=\"submit\" value=\"确认\">";
+
+
                 $("#addcontent").html(add);
                 $("#add").show(1000);
             })
         })
+        $("#ChangePwd").click(function()
+        {
+            $.getJSON("{:U('Teacher/ChangePwd')}", {}, function (data)
+            {
+                console.log("lalala");
+                var cpwd = "<form name='ChangePwd' action=\"{:U('Change/ChangePwd')}\"  onsubmit=\"return InputCheck(this) \">" +
+                        "<input type=\"text\" id=\"oold_pwd\" name=\"oold_pwd\" value="+data[0].password+" style=\"display:none\">" +
+                        "旧密码<input type=\"password\" id=\"old_pwd\" name=\"old_pwd\"><br/>" +
+                        "新密码<input type=\"password\" id=\"new_pwd\" name=\"new_pwd\"><br/>" +
+                        "重复新密码<input type=\"password\" id=\"re_pwd\" name=\"re_pwd\"><br/>" +
+                        "<input type=\"submit\" name=\"submit\" id=\"submit\" value=\"确认\"></form>";
+
+
+                $("#addcontent").html(cpwd);
+                $("#add").show();
+            })
+        })
+        $("#MyApplication").click(function()
+                {
+                    $.getJSON("{:U('Teacher/MyApplication')}", {}, function (data)
+                    {
+                        if(data.length != 0)
+                        {
+                            var result = "<tr><th>no</th><th>term</th><th>course_id</th><th>teacher_id</th><th>time</th><th>address</th><th>actual_num</th><th>volumn</th></tr>";
+
+                            for (var i = 0,j=1; i < data.length; i++,j++)
+                            {
+                                result +="<tr><td>" + j + "</td><td>" + data[i].term + "</td><td>" + data[i].course_id + "</td><td>" + data[i].teacher_id + "</td><td>" + data[i].time + "</td><td>" + data[i].address + "</td><td>" + data[i].actual_num + "</td><td>" + data[i].volume + "</td></tr>"
+                            }
+                        }
+
+                        else
+                        {
+                            var result = "<tr><th>抱歉，本学期您没有申请开课</th></tr>"
+                        }
+                        $("#resulttable").html(result);
+
+
+                    })
+                }
+        )
         $("#closeadd").click(function () {
             $("#add").hide(1000);
         });

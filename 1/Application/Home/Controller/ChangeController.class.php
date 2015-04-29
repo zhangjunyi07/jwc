@@ -97,4 +97,20 @@ class ChangeController extends Controller
             echo '<script>alert("Change Error!");history.go(-1);</script>';
         }
     }
+    public function ChangePwd($new_pwd)
+    {
+        $TModel=M('teacher');
+        $t_id=session('id');
+        $data['teacher_id']=$t_id;
+        $data['password']=$new_pwd;
+        if($TModel->save($data))
+        {
+            echo '<script>alert("Change Success!");history.go(-1);</script>';
+        }
+        else
+        {
+            echo '<script>alert("Change Error!");history.go(-1);</script>';
+        }
+
+    }
 }
